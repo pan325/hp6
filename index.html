@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生肖之争：正月初一还是立春？</title>
+    <meta property="og:title" content="生肖之争：正月初一还是立春？">
+    <meta property="og:description" content="探索国家标准为何坚持以正月初一确定生肖属相，梳理这一争议的历史依据">
+      
+  <!-- 部署用缩略图 -->
+  <meta property="og:image" content="https://pan325.github.io/hp6/fuzima.jpg">
+  <meta name="twitter:image" content="https://pan325.github.io/hp6/fuzima.jpg">
+  <link rel="image_src" href="https://pan325.github.io/hp6/fuzima.jpg">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Ma+Shan+Zheng&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #8B0000 100%);
+            min-height: 100vh;
+            color: #FFD700;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .screen {
+            display: none;
+            animation: fadeIn 0.8s ease-in;
+            flex: 1;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 15px;
+            border: 2px solid #FFD700;
+        }
+        
+        h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+        
+        h2 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.8em;
+            margin: 20px 0;
+            color: #FFA500;
+        }
+        
+        h3 {
+            color: #FFA500;
+            margin: 15px 0;
+        }
+        
+        .score-board {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 2px solid #FFD700;
+            font-size: 1.2em;
+            z-index: 1000;
+        }
+        
+        .question-box {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #FFD700;
+            backdrop-filter: blur(10px);
+        }
+        
+        .intro-text {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin: 20px 0;
+        }
+        
+        .intro-text p {
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .option-btn {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #8B0000;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-align: left;
+        }
+        
+        .option-btn:hover:not(:disabled) {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(255,215,0,0.4);
+        }
+        
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .option-btn.correct {
+            background: linear-gradient(135deg, #00C851 0%, #007E33 100%);
+            color: white;
+        }
+        
+        .option-btn.wrong {
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: white;
+        }
+        
+        .feedback {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+            animation: popIn 0.5s ease;
+        }
+        
+        .feedback.correct {
+            background: rgba(0, 200, 80, 0.3);
+            border: 2px solid #00C851;
+            color: #00ff88;
+        }
+        
+        .feedback.wrong {
+            background: rgba(255, 100, 100, 0.3);
+            border: 2px solid #ff4444;
+            color: #ffaaaa;
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .explanation {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #FFD700;
+            display: none;
+        }
+        
+        .explanation.show {
+            display: block;
+            animation: slideDown 0.5s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 500px; }
+        }
+        
+        .next-btn {
+            background: linear-gradient(135deg, #FF6B6B 0%, #EE5A24 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: none;
+            font-weight: bold;
+        }
+        
+        .next-btn.show {
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        
+        .next-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            animation: none;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #FFD700;
+        }
+        
+        th {
+            background: rgba(255,215,0,0.3);
+            font-weight: bold;
+        }
+        
+        .fill-table {
+            margin: 20px 0;
+        }
+        
+        .fill-table td {
+            min-width: 100px;
+            min-height: 60px;
+            vertical-align: middle;
+        }
+        
+        /* 确保所有边框完整 */
+        .fill-table th, .fill-table td {
+            border: 1px solid #FFD700 !important;
+        }
+        
+        .fill-blank {
+            display: inline-block;
+            min-width: 100px;
+            padding: 8px 15px;
+            margin: 5px;
+            background: rgba(255,215,0,0.2);
+            border: 2px dashed #FFD700;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .fill-blank:hover:not(.filled):not(.wrong) {
+            background: rgba(255,215,0,0.4);
+            transform: scale(1.05);
+        }
+        
+        .fill-blank.filled {
+            background: rgba(0,200,80,0.3);
+            border: 2px solid #00C851;
+            color: #00ff88;
+        }
+        
+        .fill-blank.wrong {
+            background: rgba(255,100,100,0.3);
+            border: 2px solid #ff4444;
+            color: #ffaaaa;
+        }
+        
+        .choice-btns {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        
+        .choice-btn {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #8B0000;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .choice-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255,215,0,0.4);
+        }
+        
+        .document-img {
+            width: 100%;
+            max-width: 700px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 10px;
+            border: 3px solid #FFD700;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .note {
+            background: rgba(255,215,0,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #FFD700;
+            font-size: 0.95em;
+        }
+        
+        .final-score {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            border: 3px solid #FFD700;
+            margin: 20px 0;
+        }
+        
+        .score-number {
+            font-size: 4em;
+            font-family: 'Ma Shan Zheng', cursive;
+            color: #FFD700;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+        
+        .blessing {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #FFA500;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .link-box {
+            background: rgba(255,215,0,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #FFD700;
+            text-align: center;
+        }
+        
+        .link-box a {
+            color: #FFD700;
+            font-size: 1.2em;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .link-box a:hover {
+            text-decoration: underline;
+        }
+        
+        .start-btn {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 20px;
+            font-size: 1.5em;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #8B0000;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Ma Shan Zheng', cursive;
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255,215,0,0.5); }
+            50% { box-shadow: 0 0 40px rgba(255,215,0,0.8); }
+        }
+        
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 2px solid #FFD700;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        
+        .empty-cell {
+            min-height: 60px;
+            background: rgba(255,255,255,0.05);
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8em; }
+            .score-board { position: relative; top: 0; right: 0; margin-bottom: 20px; font-size: 1em; padding: 10px 15px; }
+            .choice-btns { gap: 5px; }
+            .choice-btn { padding: 8px 20px; font-size: 0.9em; }
+            th, td { padding: 8px; font-size: 0.85em; }
+            .fill-blank { min-width: 80px; padding: 6px 12px; font-size: 0.9em; }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop>
+        <source src="https://pan325.github.io/hp6/music.mp3" type="audio/mpeg">
+    </audio>
+    
+    <div class="audio-control" onclick="toggleMusic()">
+        🎵 <span id="musicStatus">播放音乐</span>
+    </div>
+
+    <div class="container">
+        <div class="score-board">
+            当前得分：<span id="totalScore">0</span> 分
+        </div>
+
+        <!-- 第一界面：开场 -->
+        <div class="screen active" id="screen1">
+            <div class="header">
+                <h1>🐴 生肖之争 🐍</h1>
+                <p style="font-size: 1.3em;">正月初一还是立春？</p>
+            </div>
+            
+            <div class="question-box">
+                <div class="intro-text">
+                    <p style="font-size: 1.2em; text-align: center; line-height: 2;">
+                        ❓ <strong>以正月初一确定生肖属相，这个国家标准是何时定的？</strong><br>
+                        ❓ <strong>以立春确定生肖属相有什么不妥？</strong><br>
+                        ❓ <strong>为什么以立春确定生肖属相总是得到不少人认可？</strong><br>
+                        ❓ <strong>为什么国家标准还是坚持以正月初一确定生肖属相？</strong>
+                    </p>
+                    <p style="text-align: center; font-size: 1.1em; margin-top: 30px;">
+                        让我们一起梳理这一争议的双方依据吧！
+                    </p>
+                </div>
+                
+                <button class="start-btn" onclick="nextScreen()">开始探索</button>
+            </div>
+        </div>
+
+        <!-- 第二界面：国家标准 -->
+        <div class="screen" id="screen2">
+            <div class="header">
+                <h1>国家标准《农历的编算和颁行》</h1>
+            </div>
+            
+            <div class="question-box">
+                <p style="font-size: 1.1em; margin-bottom: 15px;">
+                    人民日报微信公众号在2026年2月18日推文《"我到底属啥？"这事儿竟然是有国家标准的！》中引用了《农历的编算和颁行》（见下图）：
+                </p>
+                
+                <!-- 图1：标准封面 -->
+                <img src="https://pan325.github.io/hp6/bz1.png" alt="国家标准GB/T 33661-2017封面" class="document-img">
+                <p style="text-align: center; color: #FFA500; margin-bottom: 20px;">图1 国家标准封面</p>
+                
+                <!-- 图2：标准内容 -->
+                <img src="https://pan325.github.io/hp6/bz2.png" alt="农历年的命名方法" class="document-img">
+                <p style="text-align: center; color: #FFA500; margin-bottom: 20px;">图2 农历年的命名方法</p>
+            </div>
+
+            <!-- 第1题 -->
+            <div class="question-box">
+                <h2>第1题</h2>
+                <p style="font-size: 1.1em; margin-bottom: 20px;">
+                    从《农历的编算和颁行》图1的文件编号<strong>GB/T 33661-2017</strong>可知，本标准发布于哪一年？
+                </p>
+                <div class="options">
+                    <button class="option-btn" id="q1-btn-A" onclick="checkAnswer(1, 'A', 'D')">A. 33661年</button>
+                    <button class="option-btn" id="q1-btn-B" onclick="checkAnswer(1, 'B', 'D')">B. 3661年</button>
+                    <button class="option-btn" id="q1-btn-C" onclick="checkAnswer(1, 'C', 'D')">C. 661年</button>
+                    <button class="option-btn" id="q1-btn-D" onclick="checkAnswer(1, 'D', 'D')">D. 2017年</button>
+                </div>
+                <div class="feedback" id="feedback1"></div>
+                <div class="explanation" id="exp1">
+                    <strong>正确答案：D（2017年）</strong><br>
+                    《农历的编算和颁行》由紫金山天文台起草，由国家质检总局和国家标准委于2017年5月发布，2017年9月开始实施，2023年12月复审后继续有效。
+                </div>
+            </div>
+
+            <!-- 第2题 -->
+            <div class="question-box">
+                <h2>第2题</h2>
+                <p style="font-size: 1.1em; margin-bottom: 20px;">
+                    从《农历的编算和颁行》图2可知，对应于北京时间公历1984年2月2日0时起到1985年2月19日24时截止的农历年按干支纪年法和生肖纪年法分别为什么年？
+                </p>
+                <div class="options">
+                    <button class="option-btn" id="q2-btn-A" onclick="checkAnswer(2, 'A', 'C')">A. 甲年 鼠年</button>
+                    <button class="option-btn" id="q2-btn-B" onclick="checkAnswer(2, 'B', 'C')">B. 子年 鼠年</button>
+                    <button class="option-btn" id="q2-btn-C" onclick="checkAnswer(2, 'C', 'C')">C. 甲子年 鼠年</button>
+                    <button class="option-btn" id="q2-btn-D" onclick="checkAnswer(2, 'D', 'C')">D. 甲子年 牛年</button>
+                </div>
+                <div class="feedback" id="feedback2"></div>
+                <div class="explanation" id="exp2">
+                    <strong>正确答案：C（甲子年 鼠年）</strong><br>
+                    根据国家标准，1984年2月2日至1985年2月19日为农历甲子鼠年。
+                </div>
+            </div>
+            
+            <button class="next-btn" id="next2" onclick="nextScreen()" disabled>请先完成题目</button>
+        </div>
+
+<!-- 第三界面：立春的问题 -->
+<div class="screen" id="screen3">
+    <div class="header">
+        <h1>以立春确定生肖的问题</h1>
+    </div>
+    
+    <div class="question-box">
+        <h2>第3题</h2>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+            有不少人习惯以立春确定生肖属相，对于前面提到的甲子鼠年（含有闰十月和2个立春，俗称"双春兼闰月"，全年共384天）来说，就会出现这种情况。请填写表格：
+        </p>
+        
+        <table class="fill-table" style="border-collapse: collapse; width: 100%;">
+            <tr>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">日期范围</th>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">生肖属相</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">
+                    1984年2月2-3日<br>（正月初一至初二）
+                </td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q3-1" class="fill-blank" onclick="fillBlank(3, 1, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">
+                    1984年2月4日-1985年2月3日<br>（正月初三立春至十二月十四）
+                </td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q3-2" class="fill-blank" onclick="fillBlank(3, 2, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">
+                    1985年2月4-19日<br>（十二月十五立春至三十）
+                </td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q3-3" class="fill-blank" onclick="fillBlank(3, 3, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+        </table>
+        
+        <div class="choice-btns" id="choice3-btns" style="display:none;">
+            <button class="choice-btn" onclick="confirmFill(3, '猪')">猪</button>
+            <button class="choice-btn" onclick="confirmFill(3, '鼠')">鼠</button>
+            <button class="choice-btn" onclick="confirmFill(3, '牛')">牛</button>
+        </div>
+        
+        <div class="feedback" id="feedback3"></div>
+        <div class="explanation" id="exp3">
+            <strong>正确答案：猪、鼠、牛</strong><br>
+            在同一个长长鼠年，如果以立春确定生肖属相：<br>
+            - 1984年2月2-3日（立春前）：属猪（上一年的猪）<br>
+            - 1984年2月4日-1985年2月3日：属鼠<br>
+            - 1985年2月4-19日（立春后）：属牛（下一年的牛）<br>
+            就会变成<strong>"猪头鼠身牛尾"</strong>，头和尾变得名实不副！
+        </div>
+    </div>
+    
+    <button class="next-btn" id="next3" onclick="nextScreen()" disabled>请先完成题目</button>
+</div>
+
+       <!-- 第四界面：立春的传统 -->
+<div class="screen" id="screen4">
+    <div class="header">
+        <h1>立春的传统地位</h1>
+    </div>
+    
+    <div class="question-box">
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+            相对而言，立春出现的时间比正月初一更规律，对于指导农业生产意义更大，因此，立春自古以来就极受重视。
+        </p>
+        
+        <table class="fill-table" style="border-collapse: collapse; width: 100%;">
+            <tr>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">每年出现的时间跨度</th>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">日子</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">阳历2月3-5日</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q4-new-1" class="fill-blank" onclick="fillBlank(4, 'new1', this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">阳历1月21日-2月20日</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q4-new-2" class="fill-blank" onclick="fillBlank(4, 'new2', this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+        </table>
+        
+        <h2>第4题</h2>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+            请选择合适的日子填入横线上（<span style="color: #FFA500;">立春</span>或<span style="color: #FFA500;">元旦</span>）：
+        </p>
+        
+        <div class="note">
+            <strong>注释：</strong>在中国古代，"元旦"指"正月初一"
+        </div>
+        
+        <table class="fill-table" style="border-collapse: collapse; width: 100%;">
+            <tr>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">文献</th>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">相关记载（点击填空）</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">《礼记·月令》</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">
+                    <span id="q4-1" class="fill-blank" onclick="fillBlank(4, 1, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                    之日，天子亲帅三公、九卿、诸侯、大夫以迎春于东郊。
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">《后汉书·礼仪志》</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">
+                    <span id="q4-2" class="fill-blank" onclick="fillBlank(4, 2, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                    之日，夜漏未尽五刻，京师百官皆衣青衣，郡国县道官下至斗食令史皆服青帻，立青幡，施土牛耕人于门外，以示兆民至立夏，唯武官不。
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">《旧唐书·礼仪志》</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">
+                    每岁<span id="q4-3" class="fill-blank" onclick="fillBlank(4, 3, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                    之日，祀青帝于东郊。
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">《钦定大清会典则例》</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">
+                    <span id="q4-4" class="fill-blank" onclick="fillBlank(4, 4, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                    日，各官俱朝服，由东郊迎芒神、土牛。
+                </td>
+            </tr>
+        </table>
+        
+        <div class="choice-btns" id="choice4-btns" style="display:none;">
+            <button class="choice-btn" onclick="confirmFill(4, '立春')">立春</button>
+            <button class="choice-btn" onclick="confirmFill(4, '正月初一')">正月初一</button>
+        </div>
+        
+        <div class="feedback" id="feedback4"></div>
+        <div class="explanation" id="exp4">
+            <strong>正确答案：全部填"立春"</strong><br>
+            立春是二十四节气之首，标志着阳气回升、万物复苏，是农耕生产开始的信号。"一年之计在于春"，古代中国作为农业社会，春耕的成败直接关系国家命运，因此历代王朝都极重视立春礼仪。
+        </div>
+    </div>
+    
+    <button class="next-btn" id="next4" onclick="nextScreen()" disabled>请先完成题目</button>
+</div>
+
+<!-- 第五界面：节日名称变化 -->
+<div class="screen" id="screen5">
+    <div class="header">
+        <h1>属相起算点的混淆</h1>
+    </div>
+    
+    <div class="question-box">
+        <p style="font-size: 1.1em; margin-bottom: 20px; line-height: 1.8;">
+            早在东汉元和二年（公元85年），政府就命令在全国范围内实行干支纪年法。以正月初一为岁首，以十二月最后一天为岁末，整一年都与某一个干支相匹配。从甲子年、乙丑年，到壬戌年、癸亥年，六十甲子周而复始。
+        </p>
+        <p style="font-size: 1.1em; margin-bottom: 20px; line-height: 1.8;">
+            但到了北宋时期，一位叫徐子平的命理学家在前人基础上发明了"八字算命"子平术，子平术以立春为一年的开头，以下一个立春前一天为一年的结尾，再让干支纪年与之相匹配，全年的生肖属相就一致了，避免了类似猪头鼠身牛尾的情况。这一方法在民间一直沿用至今，因此，很多人对以立春确定生肖属相的做法便习以为常了。
+        </p>
+        <p style="font-size: 1.1em; margin-bottom: 20px; line-height: 1.8;">
+            再到了1914年1月21日，时任内务部总长朱启钤向大总统袁世凯提交《定四季节假呈》，其中明确提出："拟请定阴历元旦为春节，端午为夏节，中秋为秋节，冬至为冬节。"袁世凯批准了该呈文，并于1914年起实施。于是，相关节日的名称又有了新的变化，再次引发了世人对生肖属相起算点的混淆。
+        </p>
+        
+        <table class="fill-table" style="border-collapse: collapse; width: 100%;">
+            <tr>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">方法</th>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">属相终始</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">干支纪年法</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q5-new-1" class="fill-blank" onclick="fillBlank(5, 'new1', this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">八字算命</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q5-new-2" class="fill-blank" onclick="fillBlank(5, 'new2', this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+        </table>
+        
+        <h2>第5题</h2>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+            请选择合适的名称填入横线上（<span style="color: #FFA500;">立春</span>、<span style="color: #FFA500;">元旦</span>或<span style="color: #FFA500;">春节</span>）：
+        </p>
+        
+        <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <table class="fill-table" style="border-collapse: collapse; width: 100%; min-width: 300px;">
+                <tr>
+                    <th style="border: 1px solid #FFD700; padding: 10px; background: rgba(255,215,0,0.3); font-size: 0.95em;">节日</th>
+                    <th style="border: 1px solid #FFD700; padding: 10px; background: rgba(255,215,0,0.3); font-size: 0.95em;">旧名称</th>
+                    <th style="border: 1px solid #FFD700; padding: 10px; background: rgba(255,215,0,0.3); font-size: 0.95em;">新名称</th>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #FFD700; padding: 10px; font-size: 0.9em;">公历1月1日</td>
+                    <td style="border: 1px solid #FFD700; padding: 10px; font-size: 0.9em;">1月1日</td>
+                    <td style="border: 1px solid #FFD700; padding: 10px; text-align: center;">
+                        <span id="q5-1" class="fill-blank" onclick="fillBlank(5, 1, this)" style="display: inline-block; min-width: 80px; padding: 6px 12px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.9em;">点击选择</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #FFD700; padding: 10px; font-size: 0.9em;">农历正月初一</td>
+                    <td style="border: 1px solid #FFD700; padding: 10px; font-size: 0.9em;">元旦</td>
+                    <td style="border: 1px solid #FFD700; padding: 10px; text-align: center;">
+                        <span id="q5-2" class="fill-blank" onclick="fillBlank(5, 2, this)" style="display: inline-block; min-width: 80px; padding: 6px 12px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.9em;">点击选择</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #FFD700; padding: 10px; font-size: 0.9em;">立春</td>
+                    <td style="border: 1px solid #FFD700; padding: 10px; font-size: 0.9em;">春节</td>
+                    <td style="border: 1px solid #FFD700; padding: 10px; text-align: center;">
+                        <span id="q5-3" class="fill-blank" onclick="fillBlank(5, 3, this)" style="display: inline-block; min-width: 80px; padding: 6px 12px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.9em;">点击选择</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="choice-btns" id="choice5-btns" style="display:none;">
+            <button class="choice-btn" onclick="confirmFill(5, '始于正月初一，终于十二月末')">始于正月初一，终于十二月末</button>
+            <button class="choice-btn" onclick="confirmFill(5, '始于立春，终于下个立春前一天')">始于立春，终于下个立春前一天</button>
+            <button class="choice-btn" onclick="confirmFill(5, '立春')">立春</button>
+            <button class="choice-btn" onclick="confirmFill(5, '元旦')">元旦</button>
+            <button class="choice-btn" onclick="confirmFill(5, '春节')">春节</button>
+        </div>
+        
+        <div class="feedback" id="feedback5"></div>
+        <div class="explanation" id="exp5">
+            <strong>正确答案：元旦、春节、立春</strong><br>
+            - 公历1月1日：旧称"1月1日"→新称"元旦"<br>
+            - 农历正月初一：旧称"元旦"→新称"春节"<br>
+            - 立春：旧称"春节"→新称"立春"<br>
+            立春曾经被民间广泛称为"春节"，这一名称被挪用来称正月初一后，造成了后世对生肖属相起算点的混淆。
+        </div>
+    </div>
+    
+    <button class="next-btn" id="next5" onclick="nextScreen()" disabled>请先完成题目</button>
+</div>
+
+<!-- 第六界面：岁首的历史 -->
+<div class="screen" id="screen6">
+    <div class="header">
+        <h1>岁首的历史演变</h1>
+    </div>
+    
+    <div class="question-box">
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+            为什么国家标准还是坚持以正月初一为一年开头，并以之确定生肖属相？
+        </p>
+        
+        <h2>第6题</h2>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+            请选择合适的日子填入横线上（<span style="color: #FFA500;">一月初一</span>、<span style="color: #FFA500;">十月初一</span>、<span style="color: #FFA500;">十一月初一</span>或<span style="color: #FFA500;">十二月初一</span>）：
+        </p>
+        
+        <table class="fill-table" style="border-collapse: collapse; width: 100%;">
+            <tr>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">朝代</th>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">岁首（农历年开头）</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">夏朝</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q6-1" class="fill-blank" onclick="fillBlank(6, 1, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">商朝</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q6-2" class="fill-blank" onclick="fillBlank(6, 2, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">周朝</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q6-3" class="fill-blank" onclick="fillBlank(6, 3, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">秦朝</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q6-4" class="fill-blank" onclick="fillBlank(6, 4, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px;">汉武帝时期<br>（公元前104年）</td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q6-5" class="fill-blank" onclick="fillBlank(6, 5, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+            </tr>
+        </table>
+        
+        <div class="choice-btns" id="choice6-btns" style="display:none;">
+            <button class="choice-btn" onclick="confirmFill(6, '一月初一')">一月初一</button>
+            <button class="choice-btn" onclick="confirmFill(6, '十月初一')">十月初一</button>
+            <button class="choice-btn" onclick="confirmFill(6, '十一月初一')">十一月初一</button>
+            <button class="choice-btn" onclick="confirmFill(6, '十二月初一')">十二月初一</button>
+        </div>
+        
+        <div class="feedback" id="feedback6"></div>
+        <div class="explanation" id="exp6">
+            <strong>正确答案：</strong><br>
+            夏朝：一月初一（正月）<br>
+            商朝：十二月初一<br>
+            周朝：十一月初一<br>
+            秦朝：十月初一<br>
+            汉武帝时期：一月初一（恢复夏制）<br><br>
+            正月初一作为岁首的传统从汉武帝时期就已确立，长达两千余年。民间已经习惯在正月初一过年。
+        </div>
+    </div>
+    
+    <button class="next-btn" id="next6" onclick="nextScreen()" disabled>请先完成题目</button>
+</div>
+
+<!-- 第七界面：政治理想 -->
+<div class="screen" id="screen7">
+    <div class="header">
+        <h1>三元合一与大一统</h1>
+    </div>
+    
+    <div class="question-box">
+        <p style="font-size: 1.1em; margin-bottom: 20px; line-height: 1.8;">
+            朔日（初一）是月球运行至太阳与地球之间、地面上看不到月亮的日子，象征阴极阳生、万物始苏。<br><br>
+            正月初一是年、月、日开始的统一（"三元合一"），反映着"大一统"的政治理想。
+        </p>
+        
+        <h2>第7题</h2>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+            请选择合适的典籍填入横线上：
+        </p>
+        
+        <table class="fill-table" style="border-collapse: collapse; width: 100%;">
+            <tr>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">典籍</th>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">重要表述</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q7-1" class="fill-blank" onclick="fillBlank(7, 1, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">"元年，春，王正月。"</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q7-2" class="fill-blank" onclick="fillBlank(7, 2, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">"（梁襄王）卒然问曰：'天下恶乎定？'吾对曰：'定于一。'"</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q7-3" class="fill-blank" onclick="fillBlank(7, 3, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">"何言乎'王正月'？大一统也。"</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q7-4" class="fill-blank" onclick="fillBlank(7, 4, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">"王者必受命而后王。王者必改正朔，易服色，制礼乐，一统于天下。"</td>
+            </tr>
+        </table>
+        
+        <div class="choice-btns" id="choice7-btns" style="display:none;">
+            <button class="choice-btn" onclick="confirmFill(7, '孔子《春秋》')">孔子《春秋》</button>
+            <button class="choice-btn" onclick="confirmFill(7, '《春秋公羊传》')">《春秋公羊传》</button>
+            <button class="choice-btn" onclick="confirmFill(7, '董仲舒《春秋繁露》')">董仲舒《春秋繁露》</button>
+            <button class="choice-btn" onclick="confirmFill(7, '《孟子》')">《孟子》</button>
+        </div>
+        
+        <div class="feedback" id="feedback7"></div>
+        <div class="explanation" id="exp7">
+            <strong>正确答案：</strong><br>
+            孔子《春秋》："元年，春，王正月。"<br>
+            《孟子》："（梁襄王）卒然问曰：'天下恶乎定？'吾对曰：'定于一。'"<br>
+            《春秋公羊传》："何言乎'王正月'？大一统也。"<br>
+            董仲舒《春秋繁露》："王者必受命而后王。王者必改正朔，易服色，制礼乐，一统于天下。"<br><br>
+            天下统一使用同一历法，明确正月初一为岁首，是政治大一统的象征。
+        </div>
+    </div>
+    
+    <button class="next-btn" id="next7" onclick="nextScreen()" disabled>请先完成题目</button>
+</div>
+
+<!-- 第八界面：总结与对比 -->
+<div class="screen" id="screen8">
+    <div class="header">
+        <h1>两种传统的象征意义</h1>
+    </div>
+    
+    <div class="question-box">
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+            以正月初一或立春确定生肖属相，各有悠久传统，象征意义各有侧重。
+        </p>
+        
+        <h2>第8题</h2>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+            请选择合适的日子填入横线上：
+        </p>
+        
+        <table class="fill-table" style="border-collapse: collapse; width: 100%;">
+            <tr>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">日子</th>
+                <th style="border: 1px solid #FFD700; padding: 12px; background: rgba(255,215,0,0.3);">象征意义</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q8-1" class="fill-blank" onclick="fillBlank(8, 1, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">自然观测的物理时间和人为制定的算命时间，体现"按时耕作，关注命运"的民间传统。</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: center;">
+                    <span id="q8-2" class="fill-blank" onclick="fillBlank(8, 2, this)" style="display: inline-block; min-width: 100px; padding: 8px 15px; background: rgba(255,215,0,0.2); border: 2px dashed #FFD700; border-radius: 5px; cursor: pointer; font-weight: bold;">点击选择</span>
+                </td>
+                <td style="border: 1px solid #FFD700; padding: 12px; text-align: left;">人为制定的政治时间，体现"三元合一、天下一统"的政治理想。</td>
+            </tr>
+        </table>
+        
+        <div class="choice-btns" id="choice8-btns" style="display:none;">
+            <button class="choice-btn" onclick="confirmFill(8, '正月初一')">正月初一</button>
+            <button class="choice-btn" onclick="confirmFill(8, '立春')">立春</button>
+        </div>
+        
+        <div class="feedback" id="feedback8"></div>
+        <div class="explanation" id="exp8">
+            <strong>正确答案：</strong><br>
+            立春：自然观测的物理时间和人为制定的算命时间，体现"按时耕作，关注命运"的民间传统。<br>
+            正月初一：人为制定的政治时间，体现"三元合一、天下一统"的政治理想。<br><br>
+            国家标准选择正月初一，既考虑了历史传统，也体现了文化认同。
+        </div>
+    </div>
+    
+    <button class="next-btn" id="next8" onclick="nextScreen()" disabled>查看结果</button>
+</div>
+
+        <!-- 第九界面：最终结果 -->
+        <div class="screen" id="screen9">
+            <div class="header">
+                <h1>🎊 探索完成！🎊</h1>
+            </div>
+            
+            <div class="final-score">
+                <div class="score-number" id="finalScore">0</div>
+                <p style="font-size: 1.2em; margin-top: 10px;">总分 / 270分</p>
+                <p style="font-size: 0.9em; color: #FFA500; margin-top: 10px;">（第1-2题每题10分，第3-8题每空10分）</p>
+            </div>
+            
+            <div class="blessing" id="blessing"></div>
+            
+            <div class="link-box">
+                <p style="margin-bottom: 15px;">如果对历法感兴趣，请点击以下链接，试玩一下"农历编算"小游戏：</p>
+                <a href="https://pan325.github.io/hp5/" target="_blank">👉 编算农历：从长蛇年到快马年 👈</a>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="start-btn" onclick="location.reload()">再玩一次</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentScreen = 1;
+        let totalScore = 0;
+        let answeredQuestions = {};
+        let questionAnswered = { 1: false, 2: false };
+        let currentFill = { qNum: null, index: null, element: null };
+        let fillAnswers = {
+            3: { 1: '猪', 2: '鼠', 3: '牛' },
+            4: { 'new1': '立春', 'new2': '正月初一', 1: '立春', 2: '立春', 3: '立春', 4: '立春' },
+            5: { 'new1': '始于正月初一，终于十二月末', 'new2': '始于立春，终于下个立春前一天', 1: '元旦', 2: '春节', 3: '立春' },
+            6: { 1: '一月初一', 2: '十二月初一', 3: '十一月初一', 4: '十月初一', 5: '一月初一' },
+            7: { 1: '孔子《春秋》', 2: '《孟子》', 3: '《春秋公羊传》', 4: '董仲舒《春秋繁露》' },
+            8: { 1: '立春', 2: '正月初一' }
+        };
+        let userFills = {};
+        let filledCount = { 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
+        let totalFilledRequired = { 3: 3, 4: 6, 5: 5, 6: 5, 7: 4, 8: 2 };
+        
+        function nextScreen() {
+            document.getElementById('screen' + currentScreen).classList.remove('active');
+            currentScreen++;
+            document.getElementById('screen' + currentScreen).classList.add('active');
+        }
+        
+        function checkAnswer(qNum, selected, correct) {
+            if (questionAnswered[qNum]) return;
+            questionAnswered[qNum] = true;
+            
+            const isCorrect = selected === correct;
+            const score = isCorrect ? 10 : 5;
+            totalScore += score;
+            document.getElementById('totalScore').textContent = totalScore;
+            
+            const feedback = document.getElementById('feedback' + qNum);
+            if (isCorrect) {
+                feedback.textContent = '恭喜你，答对了！+' + score + '分';
+                feedback.className = 'feedback correct show';
+            } else {
+                feedback.textContent = '答错了，继续努力吧！+' + score + '分';
+                feedback.className = 'feedback wrong show';
+            }
+            
+            // 只禁用当前题目的按钮
+            const buttons = document.querySelectorAll('#q' + qNum + '-btn-A, #q' + qNum + '-btn-B, #q' + qNum + '-btn-C, #q' + qNum + '-btn-D');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                const btnText = btn.textContent;
+                if (btnText.includes(correct + '.') || btnText.startsWith(correct + '.')) {
+                    btn.classList.add('correct');
+                } else if (btn.id === 'q' + qNum + '-btn-' + selected && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+            });
+            
+            document.getElementById('exp' + qNum).classList.add('show');
+            
+            // 检查两道题是否都已完成
+            if (questionAnswered[1] && questionAnswered[2]) {
+                const nextBtn = document.getElementById('next2');
+                nextBtn.disabled = false;
+                nextBtn.textContent = '下一关';
+                nextBtn.classList.add('show');
+            }
+        }
+        
+        function fillBlank(qNum, index, element) {
+            if (filledCount[qNum] >= totalFilledRequired[qNum] && (!userFills[qNum] || !userFills[qNum][index])) return;
+            if (element.classList.contains('filled')) return;
+            
+            currentFill = { qNum, index, element };
+            
+            document.querySelectorAll('.choice-btns').forEach(el => el.style.display = 'none');
+            document.getElementById('choice' + qNum + '-btns').style.display = 'flex';
+        }
+        
+        function confirmFill(qNum, value) {
+            if (!currentFill.element) return;
+            
+            const index = currentFill.index;
+            const elem = currentFill.element;
+            const correctAns = fillAnswers[qNum][index];
+            const isCorrect = value === correctAns;
+            
+            elem.textContent = value;
+            elem.classList.add(isCorrect ? 'filled' : 'wrong');
+            if (!isCorrect) {
+                elem.textContent = value + '→' + correctAns;
+            }
+            
+            if (!userFills[qNum]) userFills[qNum] = {};
+            if (!userFills[qNum][index]) {
+                filledCount[qNum]++;
+            }
+            userFills[qNum][index] = { value, isCorrect };
+            
+            const score = isCorrect ? 10 : 5;
+            totalScore += score;
+            document.getElementById('totalScore').textContent = totalScore;
+            
+            document.getElementById('choice' + qNum + '-btns').style.display = 'none';
+            currentFill = { qNum: null, index: null, element: null };
+            
+            // 显示即时反馈
+            showFillFeedback(qNum, index, isCorrect, score);
+            
+            // 检查是否全部完成
+            if (filledCount[qNum] === totalFilledRequired[qNum]) {
+                showFinalFeedback(qNum);
+                const nextBtn = document.getElementById('next' + qNum);
+                nextBtn.disabled = false;
+                nextBtn.textContent = qNum === 8 ? '查看结果' : '下一关';
+                nextBtn.classList.add('show');
+            }
+        }
+        
+        function showFillFeedback(qNum, index, isCorrect, score) {
+            const feedback = document.getElementById('feedback' + qNum);
+            let msg = isCorrect ? `第${index}空答对了！+${score}分` : `第${index}空答错了！+${score}分`;
+            
+            if (!feedback.classList.contains('show')) {
+                feedback.innerHTML = msg;
+                feedback.className = isCorrect ? 'feedback correct show' : 'feedback wrong show';
+            } else {
+                feedback.innerHTML += '<br>' + msg;
+            }
+        }
+        
+        function showFinalFeedback(qNum) {
+            const feedback = document.getElementById('feedback' + qNum);
+            let correctCount = 0;
+            for (let key in userFills[qNum]) {
+                if (userFills[qNum][key].isCorrect) correctCount++;
+            }
+            const total = totalFilledRequired[qNum];
+            
+            setTimeout(() => {
+                feedback.innerHTML += `<br><strong>本题记对${correctCount}/${total}空</strong>`;
+                document.getElementById('exp' + qNum).classList.add('show');
+            }, 500);
+        }
+        
+        function showFinal() {
+            document.getElementById('finalScore').textContent = totalScore;
+            
+            let blessing = '';
+            if (totalScore >= 270) {
+                blessing = '🏆 完美！你是生肖文化大师！马到成功，万事如意！';
+            } else if (totalScore >= 220) {
+                blessing = '🌟 优秀！你对历法文化了解很深！龙马精神，前程似锦！';
+            } else if (totalScore >= 170) {
+                blessing = '👍 良好！你已经掌握了生肖争议的核心！快马加鞭，步步高升！';
+            } else if (totalScore >= 120) {
+                blessing = '📚 继续加油！历法文化博大精深！一马当先，心想事成！';
+            } else {
+                blessing = '🎯 再试一次！相信你一定能掌握生肖的奥秘！马年大吉，吉祥如意！';
+            }
+            
+            document.getElementById('blessing').textContent = blessing;
+        }
+        
+        let musicPlaying = false;
+        function toggleMusic() {
+            const audio = document.getElementById('bgMusic');
+            const status = document.getElementById('musicStatus');
+            
+            if (musicPlaying) {
+                audio.pause();
+                status.textContent = '播放音乐';
+            } else {
+                audio.play().catch(e => console.log('Audio play failed:', e));
+                status.textContent = '停止播放';
+            }
+            musicPlaying = !musicPlaying;
+        }
+        
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.target.id === 'screen9' && mutation.target.classList.contains('active')) {
+                    showFinal();
+                }
+            });
+        });
+        
+        observer.observe(document.getElementById('screen9'), { attributes: true, attributeFilter: ['class'] });
+    </script>
+</body>
+</html>
